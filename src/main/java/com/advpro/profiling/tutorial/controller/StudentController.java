@@ -24,7 +24,7 @@ public class StudentController {
 
     @GetMapping("/all-student")
     public ResponseEntity<String> seedStudents() {
-        List<StudentCourse> studentCourses = studentService.getAllStudentsWithCourses();
+        List<StudentCourse> studentCourses = studentService.getAllStudentWithCourses();
         return ResponseEntity.ok(studentCourses.toString());
     }
     @GetMapping("/highest-gpa")

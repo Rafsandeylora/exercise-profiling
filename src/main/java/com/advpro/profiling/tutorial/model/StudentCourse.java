@@ -5,22 +5,26 @@ package com.advpro.profiling.tutorial.model;
  */
 
 import jakarta.persistence.*;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 @Table(name = "student_courses")
 public class StudentCourse {
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private Student student;
-
-    @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    private Course course;
 
     // Constructors
     public StudentCourse() {
