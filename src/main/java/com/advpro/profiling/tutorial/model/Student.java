@@ -2,6 +2,11 @@ package com.advpro.profiling.tutorial.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
+
 /**
  * @author muhammad.khadafi
  */
@@ -10,6 +15,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "students")
 public class Student {
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<StudentCourse> studentCourses = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +47,10 @@ public class Student {
     }
 
     // Getters and Setters
+
+    public List<StudentCourse> getStudentCourses() {
+        return studentCourses;
+    }
 
     public Long getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.advpro.profiling.tutorial.service;
 
+import com.advpro.profiling.tutorial.model.Course;
 import com.advpro.profiling.tutorial.model.Student;
 import com.advpro.profiling.tutorial.model.StudentCourse;
 import com.advpro.profiling.tutorial.repository.StudentCourseRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author muhammad.khadafi
@@ -23,19 +25,8 @@ public class StudentService {
     @Autowired
     private StudentCourseRepository studentCourseRepository;
 
-    public List<StudentCourse> getAllStudentsWithCourses() {
-        List<Student> students = studentRepository.findAll();
-        List<StudentCourse> studentCourses = new ArrayList<>();
-        for (Student student : students) {
-            List<StudentCourse> studentCoursesByStudent = studentCourseRepository.findByStudentId(student.getId());
-            for (StudentCourse studentCourseByStudent : studentCoursesByStudent) {
-                StudentCourse studentCourse = new StudentCourse();
-                studentCourse.setStudent(student);
-                studentCourse.setCourse(studentCourseByStudent.getCourse());
-                studentCourses.add(studentCourse);
-            }
-        }
-        return studentCourses;
+    public List<StudentCourse> getAllStudentWithCourses() {
+        return studentCourseRepository.findAllWithStudentAndCourse();
     }
 
     public Optional<Student> findStudentWithHighestGpa() {
